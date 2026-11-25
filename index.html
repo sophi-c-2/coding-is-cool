@@ -3,76 +3,80 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f6f7fb">
+  <meta name="theme-color" content="#f8f6f1">
   <meta name="description" content="A simple, friendly to-do list that keeps your tasks saved on this device.">
   <title>Little List — To-do</title>
   <style>
     :root {
       color-scheme: light;
-      --ink: #20243a;
-      --muted: #81869a;
-      --line: #eceef4;
-      --purple: #7258e8;
-      --purple-dark: #5b43cf;
-      --surface: #fff;
-      --page: #f6f7fb;
-      --shadow: 0 20px 60px rgb(42 45 80 / 9%);
+      --ink: #292b25;
+      --muted: #85877c;
+      --line: #e9e7df;
+      --accent: #527a65;
+      --accent-dark: #3e624f;
+      --accent-soft: #eaf1eb;
+      --surface: #fffefa;
+      --page: #f8f6f1;
+      --shadow: 0 24px 70px rgb(52 57 43 / 10%);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
-      padding: 48px 20px;
-      background: radial-gradient(ellipse at 50% 0%, #eeebff 0, transparent 38%), var(--page);
+      padding: 64px 20px;
+      background: radial-gradient(ellipse at 50% -10%, #e8eee4 0, transparent 42%), var(--page);
       color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Avenir Next", Avenir, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     button, input { font: inherit; }
     button { color: inherit; }
-    .app { width: min(100%, 680px); margin: 0 auto; }
-    .intro { margin: 0 0 28px; text-align: center; }
-    .eyebrow { margin: 0 0 10px; color: var(--purple); font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
-    h1 { margin: 0; font-size: clamp(2.2rem, 7vw, 3.25rem); letter-spacing: -.055em; line-height: 1.05; }
-    .subtitle { margin: 12px 0 0; color: var(--muted); font-size: 1rem; }
-    .card { overflow: hidden; border: 1px solid rgb(226 228 238 / 75%); border-radius: 22px; background: var(--surface); box-shadow: var(--shadow); }
-    .composer { display: flex; gap: 10px; padding: 22px; border-bottom: 1px solid var(--line); }
-    .composer input { min-width: 0; flex: 1; padding: 13px 15px; border: 1px solid #e4e6ef; border-radius: 12px; outline: none; background: #fbfbfd; color: var(--ink); transition: border-color .2s, box-shadow .2s; }
-    .composer input::placeholder { color: #a4a8b7; }
-    .composer input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgb(114 88 232 / 13%); }
-    .add-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 0; border-radius: 12px; background: var(--purple); color: white; font-weight: 750; cursor: pointer; transition: background .2s, transform .2s; }
-    .add-button:hover { transform: translateY(-1px); background: var(--purple-dark); }
+    .app { width: min(100%, 660px); margin: 0 auto; }
+    .intro { margin: 0 0 34px; text-align: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px; color: var(--accent); font-size: .73rem; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow::before, .eyebrow::after { width: 18px; height: 1px; background: #a9b9a9; content: ""; }
+    h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.7rem, 8vw, 4rem); font-weight: 500; letter-spacing: -.06em; line-height: 1; }
+    h1 span { color: #b9854d; font-family: inherit; font-size: .64em; vertical-align: .18em; }
+    .subtitle { margin: 15px 0 0; color: var(--muted); font-size: 1rem; }
+    .card { overflow: hidden; border: 1px solid rgb(226 224 214 / 85%); border-radius: 24px; background: var(--surface); box-shadow: var(--shadow); }
+    .composer { display: flex; gap: 11px; padding: 22px; border-bottom: 1px solid var(--line); }
+    .composer input { min-width: 0; flex: 1; padding: 14px 16px; border: 1px solid #e8e6de; border-radius: 13px; outline: none; background: #fbfaf6; color: var(--ink); transition: border-color .2s, box-shadow .2s; }
+    .composer input::placeholder { color: #a3a398; }
+    .composer input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgb(82 122 101 / 12%); }
+    .add-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 19px; border: 0; border-radius: 13px; background: var(--accent); color: white; font-weight: 700; cursor: pointer; transition: background .2s, transform .2s; }
+    .add-button:hover { transform: translateY(-1px); background: var(--accent-dark); }
     .add-button:active { transform: translateY(0); }
     .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 22px; border-bottom: 1px solid var(--line); }
-    .filters { display: flex; gap: 4px; }
-    .filter { padding: 8px 11px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); font-size: .88rem; font-weight: 650; cursor: pointer; }
-    .filter:hover { background: #f7f6ff; color: var(--purple); }
-    .filter[aria-pressed="true"] { background: #f0edff; color: var(--purple-dark); }
+    .filters { display: flex; gap: 5px; }
+    .filter { padding: 8px 12px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); font-size: .88rem; font-weight: 650; cursor: pointer; transition: background .18s, color .18s; }
+    .filter:hover { background: #f4f5ef; color: var(--accent); }
+    .filter[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent-dark); }
     .count { color: var(--muted); font-size: .84rem; white-space: nowrap; }
     .task-list { min-height: 224px; margin: 0; padding: 4px 22px; list-style: none; }
     .task { display: flex; align-items: center; gap: 13px; min-height: 67px; border-bottom: 1px solid var(--line); animation: arrive .22s ease-out; }
     .task:last-child { border-bottom: 0; }
     @keyframes arrive { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-    .check { display: grid; width: 22px; height: 22px; flex: 0 0 22px; place-items: center; padding: 0; border: 1.7px solid #cdd0dc; border-radius: 50%; background: white; color: white; cursor: pointer; transition: .18s; }
-    .check:hover { border-color: var(--purple); }
-    .task.done .check { border-color: var(--purple); background: var(--purple); }
+    .check { display: grid; width: 22px; height: 22px; flex: 0 0 22px; place-items: center; padding: 0; border: 1.7px solid #c9cbbf; border-radius: 50%; background: white; color: white; cursor: pointer; transition: border-color .18s, background .18s; }
+    .check:hover { border-color: var(--accent); }
+    .task.done .check { border-color: var(--accent); background: var(--accent); }
     .check svg { width: 13px; height: 13px; }
     .task-text { min-width: 0; flex: 1; overflow-wrap: anywhere; font-size: .98rem; line-height: 1.45; }
-    .task.done .task-text { color: #a2a5b2; text-decoration: line-through; text-decoration-thickness: 1.5px; }
-    .delete { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border: 0; border-radius: 9px; background: transparent; color: #a4a8b7; cursor: pointer; opacity: 0; transition: .18s; }
-    .task:hover .delete, .delete:focus-visible { background: #fff0f1; color: #d35264; opacity: 1; }
+    .task.done .task-text { color: #a2a397; text-decoration: line-through; text-decoration-thickness: 1.5px; }
+    .delete { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border: 0; border-radius: 9px; background: transparent; color: #a4a69b; cursor: pointer; opacity: 0; transition: .18s; }
+    .task:hover .delete, .delete:focus-visible { background: #fff0ec; color: #c76552; opacity: 1; }
     .delete svg { width: 17px; height: 17px; }
     .empty { display: grid; min-height: 216px; place-content: center; padding: 28px; color: var(--muted); text-align: center; }
     .empty-icon { margin-bottom: 12px; font-size: 2rem; }
-    .empty strong { color: var(--ink); font-size: 1rem; }
-    .empty p { margin: 6px 0 0; font-size: .9rem; }
+    .empty strong { color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.2rem; font-weight: 500; }
+    .empty p { margin: 7px 0 0; font-size: .9rem; }
     .footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .83rem; }
     .clear-button { padding: 6px 0; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
-    .clear-button:hover:not(:disabled) { color: #d35264; }
+    .clear-button:hover:not(:disabled) { color: #c76552; }
     .clear-button:disabled { cursor: default; opacity: .42; }
-    .tip { margin: 18px 0 0; color: #a0a4b4; font-size: .8rem; text-align: center; }
-    button:focus-visible { outline: 3px solid rgb(114 88 232 / 35%); outline-offset: 2px; }
+    .tip { margin: 18px 0 0; color: #96978c; font-size: .8rem; text-align: center; }
+    button:focus-visible { outline: 3px solid rgb(82 122 101 / 35%); outline-offset: 2px; }
     @media (max-width: 480px) {
-      body { padding: 32px 13px; }
+      body { padding: 38px 13px; }
+      .intro { margin-bottom: 27px; }
       .composer { gap: 8px; padding: 15px; }
       .add-button { padding: 0 13px; }
       .toolbar, .footer { padding-right: 15px; padding-left: 15px; }
